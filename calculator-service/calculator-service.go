@@ -25,6 +25,38 @@ func main() {
 			fmt.Fprintf(rw, "<h1> The result is:%d</h1> ", result)
 		}
 	})
+
+	http.HandleFunc("/calculator", func(rw http.ResponseWriter, r *http.Request) {
+
+		if r.Method == http.MethodPost {
+
+			r.ParseForm()
+			op1, err_op1 := strconv.Atoi(r.FormValue("operand1"))
+
+			if err_op1 != nil {
+				log.Fatal(err_op1)
+				return
+			}
+
+			op2, err_op2 := strconv.Atoi(r.FormValue("operand2"))
+			if err_op2 != nil {
+				log.Fatal(err_op2)
+				return
+			}
+			result, err := Calculate(r.FormValue("operation"), op1, op2)
+
+			if err == nil {
+				fmt.Fprintf(rw, "The result is: %d", result)
+			}
+
+			return
+
+		}
+
+		http.ServeFile(rw, r, "calculator.html")
+
+	})
+
 	log.Fatal(http.ListenAndServe("localhost:8010", nil))
 }
 
