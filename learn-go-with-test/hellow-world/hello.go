@@ -6,6 +6,11 @@ func main() {
 	fmt.Println(Hello("world"))
 }
 
+const englishHelloPrefix = "Hello, "
+
 func Hello(user string) string {
-	return fmt.Sprintf("Hello, %s!", user)
+	if user == "" {
+		user = "World"
+	}
+	return englishHelloPrefix + user + "!"
 }
