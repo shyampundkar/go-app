@@ -2,11 +2,10 @@ package main
 
 func SumVariadic(variableArgs ...[]int) (result []int) {
 
-	result = make([]int, len(variableArgs))
+	//result = make([]int, len(variableArgs))
 
-	for i, v := range variableArgs {
-		result[i] = SumAll(v)
-
+	for _, v := range variableArgs {
+		result = append(result,SumAll(v))
 	}
 
 	return

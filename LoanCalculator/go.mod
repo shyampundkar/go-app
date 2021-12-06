@@ -1,4 +1,4 @@
-module calculator
+module LoanCalculator
 
 go 1.17
 
