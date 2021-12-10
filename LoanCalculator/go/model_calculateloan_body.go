@@ -9,8 +9,7 @@
 package swagger
 
 type CalculateloanBody struct {
-
-	LoanAmount int32 `json:"loan_amount,omitempty"`
+	LoanAmount float64 `json:"loan_amount,omitempty"`
 
 	LoanType string `json:"loan_type,omitempty"`
 

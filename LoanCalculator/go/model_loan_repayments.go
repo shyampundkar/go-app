@@ -9,10 +9,9 @@
 package swagger
 
 type LoanRepayments struct {
+	MonthlyRepayments float64 `json:"monthly_repayments,omitempty"`
 
-	MonthlyRepayments int32 `json:"monthly_repayments,omitempty"`
+	TotalInterestPayable float64 `json:"total_interest_payable,omitempty"`
 
-	TotalInterestPayable int32 `json:"total_interest_payable,omitempty"`
-
-	AmountOwing []LoanRepaymentsAmountOwing `json:"amount_owing,omitempty"`
+	AmountOwning []LoanRepaymentsAmountOwing `json:"amount_owing,omitempty"`
 }
