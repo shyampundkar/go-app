@@ -11,6 +11,6 @@ package swagger
 type LoanRepaymentsAmountOwing struct {
 	Year      int32   `json:"year, paymentNo"`
 	Principal float64 `json:"principal,omitempty"`
-	Interest  float64 `json:"interest,omitempty"`
+	Interest  float64 `json:"interest"`
 	Total     float64 `json:"total,omitempty"`
 }
