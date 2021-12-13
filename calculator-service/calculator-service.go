@@ -30,7 +30,11 @@ func main() {
 
 		if r.Method == http.MethodPost {
 
-			r.ParseForm()
+			err := r.ParseForm()
+			if err != nil {
+				rw.WriteHeader(http.StatusBadRequest)
+				return
+			}
 			op1, err_op1 := strconv.Atoi(r.FormValue("operand1"))
 
 			if err_op1 != nil {
