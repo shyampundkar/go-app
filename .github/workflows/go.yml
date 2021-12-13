@@ -18,6 +18,10 @@ jobs:
       with:
         go-version: 1.17
         
+    - name: lint
+      working-directory: ./LoanCalculator/
+      run: golangci-lint run ./...
+        
     - name: Test
       working-directory: ./LoanCalculator/
       run: go test -v ./...
