@@ -3,10 +3,10 @@ package swagger
 import "math"
 
 type InterestCalculator struct {
-	//CalculatorBase
 	ICalculateAmortizationSchedule
 }
 
+// Calculate loan repayment based on frequency
 func (InterestCalculator) CalculateRepayment(InterestRate float64, LoanTerm int32, LoanAmount float64, totalNumberOfPayments int32) (repayment float64) {
 
 	if InterestRate != 0 {
@@ -16,11 +16,13 @@ func (InterestCalculator) CalculateRepayment(InterestRate float64, LoanTerm int3
 	return
 }
 
+// Calculate total interest payable for the whole loan term (e.g 1,2,3year...etc)
 func (InterestCalculator) CalculateTotalInterestPayable(loanAmout, repayment float64, totalNumberOfPayments int32) float64 {
 
 	return repayment * float64(totalNumberOfPayments)
 }
 
+// Calculate the reducing interest and principal for the loan term
 func (InterestCalculator) CalculateAmountOwning(interestRate float64, loanTerm int32, loanAmount float64, monthlyRepayment float64, totalNumberOfPayments int32) (loanRepaymentsAmountOwing []LoanRepaymentsAmountOwing) {
 	var initialPeriod LoanRepaymentsAmountOwing = LoanRepaymentsAmountOwing{}
 	initialPeriod.Year = 0
