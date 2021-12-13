@@ -12,18 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2 
-    - uses: golangci/golangci-lint-action@v2.5.2   
+    - uses: golangci/golangci-lint-action@v2 
     
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.17       
-      
-      
-    - name: Run golangci-lint            
-      working-directory: ./LoanCalculator/
-      run: golangci-lint run
-        
+            
+    - name: golangci-lint
+      uses: golangci/golangci-lint-action@v2
+      with:
+        working-directory: ./LoanCalculator/
+         
     - name: Test
       working-directory: ./LoanCalculator/
       run: go test -v ./...
