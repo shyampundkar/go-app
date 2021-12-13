@@ -18,14 +18,32 @@ import (
 
 func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 
-	requestBodyBytes, _ := ioutil.ReadAll(r.Body)
+	requestBodyBytes, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
 	var calculateloanBody CalculateloanBody
-	json.Unmarshal(requestBodyBytes, &calculateloanBody)
+	err = json.Unmarshal(requestBodyBytes, &calculateloanBody)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
 	loanRepayment := CalculateLoanRepaymentsAmountOwing(calculateloanBody)
 
-	j, _ := json.Marshal(&loanRepayment)
-	w.Write(j)
+	j, err := json.Marshal(&loanRepayment)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	_, err = w.Write(j)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	w.WriteHeader(http.StatusOK)
