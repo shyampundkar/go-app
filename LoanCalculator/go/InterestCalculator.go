@@ -3,7 +3,7 @@ package swagger
 import "math"
 
 type InterestCalculator struct {
-	CalculatorBase
+	//CalculatorBase
 	ICalculateAmortizationSchedule
 }
 
