@@ -17,10 +17,14 @@ import (
 )
 
 func CalculateLoan(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	//responseCode := http.StatusOK
 
 	requestBodyBytes, err := ioutil.ReadAll(r.Body)
-	if err != nil {
+	if err != nil || len(requestBodyBytes) == 0 {
+		//handleError(w, http.StatusBadRequest, "")
 		w.WriteHeader(http.StatusBadRequest)
+
 		return
 	}
 
@@ -44,10 +48,13 @@ func CalculateLoan(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 
 	w.WriteHeader(http.StatusOK)
 }
+
+// func handleError (w http.ResponseWriter, errorCode, errorMessage string) {
+
+// }
 
 func CalculateLoanRepaymentsAmountOwing(calculateloanBody CalculateloanBody) (loanRepayment LoanRepayments) {
 
