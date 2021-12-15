@@ -43,7 +43,7 @@ func NewRouter() *mux.Router {
 }
 
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World ABC!")
+	fmt.Fprintf(w, "Hello World!")
 }
 
 var routes = Routes{
@@ -59,5 +59,29 @@ var routes = Routes{
 		strings.ToUpper("Post"),
 		"/calculate-loan",
 		CalculateLoan,
+	},
+	Route{
+		"CalculateLoan",
+		strings.ToUpper("Get"),
+		"/calculate-loan",
+		func(rw http.ResponseWriter, r *http.Request) { rw.WriteHeader(http.StatusMethodNotAllowed) },
+	},
+	Route{
+		"CalculateLoan",
+		strings.ToUpper("Put"),
+		"/calculate-loan",
+		func(rw http.ResponseWriter, r *http.Request) { rw.WriteHeader(http.StatusMethodNotAllowed) },
+	},
+	Route{
+		"CalculateLoan",
+		strings.ToUpper("Delete"),
+		"/calculate-loan",
+		func(rw http.ResponseWriter, r *http.Request) { rw.WriteHeader(http.StatusMethodNotAllowed) },
+	},
+	Route{
+		"CalculateLoan",
+		strings.ToUpper("Patch"),
+		"/calculate-loan",
+		func(rw http.ResponseWriter, r *http.Request) { rw.WriteHeader(http.StatusMethodNotAllowed) },
 	},
 }

@@ -24,15 +24,14 @@ func (InterestCalculator) CalculateTotalInterestPayable(loanAmout, repayment flo
 
 // Calculate the reducing interest and principal for the loan term
 func (InterestCalculator) CalculateAmountOwning(interestRate float64, loanTerm int32, loanAmount float64, monthlyRepayment float64, totalNumberOfPayments int32) (loanRepaymentsAmountOwing []LoanRepaymentsAmountOwing) {
-	var initialPeriod LoanRepaymentsAmountOwing = LoanRepaymentsAmountOwing{}
-	initialPeriod.Year = 0
-	initialPeriod.Principal = loanAmount
+
 	currentInterest := (monthlyRepayment * float64(totalNumberOfPayments))
-	initialPeriod.Interest = (math.Ceil(currentInterest))
-	initialPeriod.Total = loanAmount + float64(initialPeriod.Interest)
-	loanRepaymentsAmountOwing = append(loanRepaymentsAmountOwing, initialPeriod)
 	previousInterest := currentInterest
-	rate := (interestRate / float64(totalNumberOfPayments) / 100)
+	initialPeriod := createInitialPeriod(loanAmount, currentInterest, monthlyRepayment, totalNumberOfPayments)
+	loanRepaymentsAmountOwing = append(loanRepaymentsAmountOwing, initialPeriod)
+
+	rate := calculateInterestRate(interestRate, totalNumberOfPayments)
+
 	currentInterest = loanAmount * rate
 
 	for i := int32(1); i <= totalNumberOfPayments; i++ {
@@ -53,4 +52,17 @@ func (InterestCalculator) CalculateAmountOwning(interestRate float64, loanTerm i
 
 	}
 	return
+}
+
+func calculateInterestRate(interestRate float64, totalNumberOfPayments int32) float64 {
+	return (interestRate / float64(totalNumberOfPayments) / 100)
+}
+
+func createInitialPeriod(loanAmount, currentInterest, monthlyRepayment float64, totalNumberOfPayments int32) LoanRepaymentsAmountOwing {
+	var initialPeriod LoanRepaymentsAmountOwing = LoanRepaymentsAmountOwing{}
+	initialPeriod.Year = 0
+	initialPeriod.Principal = loanAmount
+	initialPeriod.Interest = (math.Ceil(currentInterest))
+	initialPeriod.Total = loanAmount + float64(initialPeriod.Interest)
+	return initialPeriod
 }
