@@ -94,7 +94,7 @@ func TestCalculateLoan(t *testing.T) {
 		}
 
 		var modelError ModelError
-		json.Unmarshal(requestBodyBytes, &modelError)
+		json.Unmarshal(requestBodyBytes, &modelError) //nolint
 
 		if result, _ := strconv.Atoi(modelError.Code); (result != http.StatusBadRequest) || modelError.Message != "RequestBodyEmpty : Please enter request body" {
 			t.Errorf("got: %s want: %d", modelError.Code, http.StatusBadRequest)
@@ -117,33 +117,13 @@ func TestCalculateLoan(t *testing.T) {
 		}
 
 		var modelError ModelError
-		json.Unmarshal(requestBodyBytes, &modelError)
+		json.Unmarshal(requestBodyBytes, &modelError) //nolint
 
 		if result, _ := strconv.Atoi(modelError.Code); result != http.StatusBadRequest {
 			t.Errorf("got: %s want: %d", modelError.Code, http.StatusBadRequest)
 		}
 
 	})
-
-	t.Run("Verify validation for Method Not Allowed - Negative", func(t *testing.T) {
-
-		req := httptest.NewRequest("GET", "/calculate-loan", nil)
-		w := httptest.NewRecorder()
-		CalculateLoan(w, req)
-		requestBodyBytes, err := ioutil.ReadAll(w.Body)
-		if err != nil {
-			log.Fatalln(err)
-		}
-
-		var modelError ModelError
-		json.Unmarshal(requestBodyBytes, &modelError)
-
-		if result, _ := strconv.Atoi(modelError.Code); result != http.StatusBadRequest {
-			t.Errorf("got: %s want: %d", modelError.Code, http.StatusBadRequest)
-		}
-
-	})
-
 }
 
 func verify(calculateloanBody CalculateloanBody, wantMonthlyRepayment float64, t *testing.T, wantTotalInterestPayable float64) {
