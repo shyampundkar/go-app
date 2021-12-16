@@ -83,7 +83,7 @@ func TestCalculateLoan(t *testing.T) {
 
 	})
 
-	t.Run("Verify validation for empty body - Negative", func(t *testing.T) {
+	t.Run("Validation for empty body - Negative", func(t *testing.T) {
 
 		req := httptest.NewRequest("POST", "/calculate-loan", nil)
 		w := httptest.NewRecorder()
@@ -102,13 +102,13 @@ func TestCalculateLoan(t *testing.T) {
 
 	})
 
-	t.Run("Verify validation for invalid body - Negative", func(t *testing.T) {
+	t.Run("Validation for invalid body format - Negative", func(t *testing.T) {
 
 		postBody := []byte("test")
 
-		responseBody := bytes.NewBuffer(postBody)
+		body := bytes.NewBuffer(postBody)
 
-		req := httptest.NewRequest("POST", "/calculate-loan", responseBody)
+		req := httptest.NewRequest("POST", "/calculate-loan", body)
 		w := httptest.NewRecorder()
 		CalculateLoan(w, req)
 		requestBodyBytes, err := ioutil.ReadAll(w.Body)
